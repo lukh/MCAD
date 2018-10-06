@@ -33,6 +33,18 @@ module box(width, height, depth) {
   cube([width, height, depth], true);
 }
 
+module ctr_cube(size, centered){
+    width_center = centered[0];
+    height_center = centered[1]; 
+    depth_center = centered[2];
+
+    w_off = width_center ? -size[0]/2 : 0;
+    h_off = height_center ? -size[1]/2 : 0;
+    d_off = depth_center ? -size[2]/2: 0;
+
+    translate([w_off, h_off, d_off]) cube(size);
+}
+
 // size is a vector [w, h, d]
 module roundedBox(width, height, depth, radius) {
   size=[width, height, depth];
