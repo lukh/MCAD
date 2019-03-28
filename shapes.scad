@@ -33,7 +33,7 @@ module box(width, height, depth) {
   cube([width, height, depth], true);
 }
 
-module ctr_cube(size, centered){
+module centeredCube(size, centered){
     width_center = centered[0];
     height_center = centered[1]; 
     depth_center = centered[2];
