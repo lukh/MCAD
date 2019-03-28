@@ -14,7 +14,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *
 */
 
@@ -27,13 +27,25 @@ module triangle(radius)
   polygon(points=[[-a,-o],[0,radius],[a,-o]],paths=[[0,1,2]]);
 }
 
-module reg_polygon(sides,radius)
+module reg_polygon(sides, radius) {
+  echo("<font color='red'>
+        DEPRECATED: function 'reg_polygon' is now deprecated
+        please use 'regular_polygon' instead</font>");
+
+     regular_polygon(sides, radius);
+}
+
+module regular_polygon(sides, radius)
 {
   function dia(r) = sqrt(pow(r*2,2)/2);  //sqrt((r*2^2)/2) if only we had an exponention op
   if(sides<2) square([radius,0]);
   if(sides==3) triangle(radius);
   if(sides==4) square([dia(radius),dia(radius)],center=true);
-  if(sides>4) circle(r=radius,$fn=sides);
+  if(sides>4) {
+    angles=[ for (i = [0:sides-1]) i*(360/sides) ];
+    coords=[ for (th=angles) [radius*cos(th), radius*sin(th)] ];
+    polygon(coords);
+  }
 }
 
 module pentagon(radius)
